@@ -119,7 +119,7 @@ class Dragon(MyMagicPet):
     def __init__(self, name, age, gender, color,tech):
         super().__init__(name, age, gender, color)
         #子类继承上面的父类，当然可以继承父类的属性和方法，当我们在调用时，还需用到另一条咒语：super()
-        #在子类的基础上，我们可以添加一独特的属性和方法
+        #在子类的基础上，我们可以添加一些独特的属性和方法
         self.size = "大型"
         self.strength = "强大"
         self.speed = "飞快"
@@ -143,7 +143,7 @@ class Dragon(MyMagicPet):
         # 然后根据技能的效果来进行相应的操作
         if self.tech == "技能1":
             print("技能1使用成功")
-            if self.physicalCondition == "饥饿" or self.mentalCondition == "疲劳的":
+            if self.physicalCondition == "饥饿的" or self.mentalCondition == "疲劳的":
                 print(f"你的宠物{self.name}向前喷射了一小团小小的火焰，")
             else:
                 print(f"你的宠物{self.name}向前喷射了一团巨大的火焰")
@@ -152,7 +152,7 @@ class Dragon(MyMagicPet):
                 self.upgrade_pet()
         elif self.tech == "技能2":
             print("技能2使用成功")
-            if self.physicalCondition == "饥饿" or self.mentalCondition == "疲劳的":
+            if self.physicalCondition == "饥饿的" or self.mentalCondition == "疲劳的":
                 print(f"你的宠物{self.name}向前刮起了一阵人畜无害的微风")
                 self.upgrade_pet()
             else:
