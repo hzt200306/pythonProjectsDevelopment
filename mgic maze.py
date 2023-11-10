@@ -1,16 +1,4 @@
 # 根据玩家选择采取不同的路径和使用控制流工具的代码
-import os
-
-# 创建目录
-dir_path = 'C:\\Users\\10152\\Desktop'
-if not os.path.exists(dir_path):
-    os.makedirs(dir_path)
-
-# 在目录下创建文件
-file_path = os.path.join(dir_path, 'mgic maze.py')
-with open(file_path, 'w') as f:
-    f.write('')
-
 
 print("欢迎来到魔法迷宫！你是一名勇敢的探险者。")
 
