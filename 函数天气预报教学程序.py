@@ -1,30 +1,42 @@
-import random
+import requests  # 导入requests模块，用于发送网络请求
+
+# 全局变量
+API_URL = "https://v0.yiketianqi.com/free/day"  # 新的天气API网址
+API_APPID = "89594975"  # 你的用户appid
+API_SECRET = "2oWBHTtn"  # 你的用户appsecret
 
 
-# 创建一个魔法咒语函数，用于查询天气
-def magic_weather_hat(location):
-    # 模拟查询天气，返回随机天气数据
-    weather_data = {
-        'sunny': '晴天',
-        'rainy': '雨天',
-        'cloudy': '多云',
-        'windy': '有风',
-    }
+# 如何使用查看这个：http://www.tianqiapi.com/index/doc?version=day
+def magic_weather_hat(city):
+    """
+    这是一个魔法咒语（函数），当你告诉它一个城市的名字时，它会用神秘的网络通道从远方获取那个城市的天气信息。
+    参数：city - 你想知道天气的城市名称
+    结果：打印出那个城市的详细天气情况
+    """
+    # 构造请求URL
+    request_url = f"{API_URL}?appid={API_APPID}&appsecret={API_SECRET}&city={city}&unescape=1"
 
-    # 使用Lambda函数将摄氏度转换为华氏度
-    celsius_to_fahrenheit = lambda celsius: (celsius * 9 / 5) + 32
+    # 通过网络通道获取天气数据
+    response = requests.get(request_url)
+    weather_data = response.json()  # 解析返回的JSON数据
 
-    # 随机生成温度
-    temperature_celsius = random.randint(-10, 30)
-    temperature_fahrenheit = celsius_to_fahrenheit(temperature_celsius)
+    # 从天气数据中提取信息
+    weather_condition = weather_data['wea']  # 天气情况
+    temperature_current = weather_data['tem']  # 实况温度
+    temperature_day = weather_data['tem_day']  # 白天温度
+    temperature_night = weather_data['tem_night']  # 夜间温度
+    wind_direction = weather_data['win']  # 风向
+    wind_speed = weather_data['win_speed']  # 风力
 
     # 输出天气信息
     print(
-        f"在{location}的天气是{weather_data[random.choice(list(weather_data.keys()))]}，温度为{temperature_celsius}摄氏度 ({temperature_fahrenheit}华氏度)。")
+        f"在{city}的天气是{weather_condition}，当前温度为{temperature_current}度，"
+        f"白天温度为{temperature_day}度，夜间温度为{temperature_night}度。"
+        f"风向是{wind_direction}，风力为{wind_speed}。")
 
 
-# 主程序
+# 这是主程序的入口
 if __name__ == "__main__":
     print("欢迎使用魔法天气帽！")
-    location = input("请输入一个地点，我会告诉你那里的天气：")
-    magic_weather_hat(location)
+    city = input("请输入一个城市名称，我会告诉你那里的天气：")  # 魔法帽子在询问你想了解的城市
+    magic_weather_hat(city)  # 使用魔法咒语查询天气
