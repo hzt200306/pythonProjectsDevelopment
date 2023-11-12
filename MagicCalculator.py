@@ -103,8 +103,19 @@ class MagicCalculator:
             operand1, operator, operand2 = operation
             self.perform_magic(operand1, operator, operand2)
 
-    def get_result(self):
-        return self.result
+        def get_result(self):
+            """
+            获取结果
+
+            Args:
+                self: 对象本身
+
+            Returns:
+                result: 结果值
+
+            """
+            return self.result
+
 
 
 def magic_calculator():

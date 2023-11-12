@@ -1,6 +1,7 @@
 # 导入datetime模块来处理日期和时间
 import datetime
 
+
 # 定义一个Pet类，可以想象成一个虚拟的小助手或宠物
 class Pet:
     # 初始化函数，用来设置小助手的基本属性
@@ -24,6 +25,7 @@ class Pet:
     def age_to_string(self):
         return str(self.age)  # 使用str()函数将年龄转换为字符串
 
+
 # 创建虚拟小助手
 # 让孩子们通过输入来创建他们自己的小助手
 name = input("请输入虚拟小助手的名字: ")
@@ -38,7 +40,7 @@ pet = Pet(name, age, weight, is_online)
 # 让孩子们输入他们小助手的朋友数量，并为每个朋友输入名字和联系方式
 num_friends = int(input("请输入好友数量: "))
 for i in range(num_friends):
-    print(f"第 {i+1} 个好友:")
+    print(f"第 {i + 1} 个好友:")
     friend_name = input("好友名称: ")
     contact_info = input("好友联系方式: ")
     pet.add_friend(friend_name, contact_info)
@@ -56,4 +58,3 @@ print(f"是否在线: {pet.is_online}")
 print("\n好友列表:")
 for friend in pet.friends:
     print(f"名字: {friend['name']}, 联系方式: {friend['contact_info']}")
-
