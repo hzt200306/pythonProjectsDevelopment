@@ -50,22 +50,20 @@ class MyMagicPet:
         喂食失败则输出失败信息
         '''
         if self.physicalCondition == "健康的":
-            print("喂食成功")
+            print("喂食成功，你的宠物打了一个很响的饱嗝")
             self.physicalCondition = "饱食的"
-            if self.mentalCondition == "疲劳的":
-                self.mentalCondition = "快乐的"
-            print(f"{self.name}现在状态是{self.physicalCondition}")
             self.upgrade_pet()
         elif self.physicalCondition == "饥饿的":
-            print("喂食成功")
-            if self.mentalCondition == "疲劳的":
-                self.mentalCondition = "快乐的"
+            print("喂食成功，你的宠物蹭着你的腿表示感谢")
             self.physicalCondition = "健康的"
-            print(f"{self.name}现在状态是{self.physicalCondition}和{self.mentalCondition}")
+            self.upgrade_pet()
         else:
             print("喂食失败")
             print(f"{self.name}现在状态是{self.physicalCondition}")
             print("无法继续获取经验，需要玩耍")
+        if self.mentalCondition == "疲劳的":
+            self.mentalCondition = "快乐的"
+        print(f"{self.name}现在状态是{self.physicalCondition}和{self.mentalCondition}")
     def play_with_pet(self):
         '''
         这个函数咒语根据宠物的身心状态决定是否可以和宠物玩耍，
@@ -73,20 +71,20 @@ class MyMagicPet:
 
         '''
         if self.physicalCondition != "饥饿的" and self.mentalCondition == "快乐的":
-            print("跟他们玩耍成功")
+            print("跟他玩耍成功")
             self.mentalCondition = "兴奋的"
             print(f"{self.name}现在状态是{self.mentalCondition}")
             self.upgrade_pet()
-            print(f"现在{self.name}的等级是{self.degree}")
-        elif self.mentalCondition == "兴奋的":
-            print("跟他们玩耍成功")
+        elif self.physicalCondition != "饥饿的" and self.mentalCondition == "兴奋的":
+            print("跟他玩耍成功")
             self.mentalCondition = "疲劳的"
             self.physicalCondition = "饥饿的"
-            print(f"{self.name}现在的状态是{self.physicalCondition}和{self.mentalCondition}")
+            self.upgrade_pet()
         else:
             print("跟他们玩耍失败")
             print(f"{self.name}现在状态是{self.mentalCondition}")
             print("无法继续获取经验，需要喂食")
+        print(f"{self.name}现在的状态是{self.physicalCondition}和{self.mentalCondition}")
     def roll_over(self):
         '''这是一个简单的让宠物执行翻滚动作的函数咒语'''
         if self.degree >= 2:
@@ -223,7 +221,7 @@ dragon2.feed_pet()
 dragon2.use_tech()
 #意料之外的惊喜，不是吗，显然，客人成功地被这个宠物强大的能力所吸引，噢，你出色地完成了任务
 #任务5：模仿对火焰龙的操作，给独角兽也加上相应的功能或你喜欢的特点，并展示独角兽的特点，让没见过独角兽的客人大吃一惊吧
-
+unicorn = MyMagicPet("小独角兽", 10, "女", "白色")
 
 #尾声：
 '''请尽情发挥你的想象力，用刚学会的编程魔法去大干一场吧！

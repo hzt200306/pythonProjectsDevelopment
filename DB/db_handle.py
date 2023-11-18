@@ -1,7 +1,9 @@
 import json
 import os
-#，在调用时，需要把这个文件路径换成你自己的路径
-file_directory = r"D:\python\serviceProjectDevelopment\DB\pet_info"
+#获取路径
+current_directory = os.path.dirname(os.path.abspath(__file__))
+file_directory = os.path.join(current_directory, 'pet_info')
+
 
 def save_data(pet_info):
     name = pet_info['name']
@@ -40,6 +42,7 @@ def get_all_data():
                     pet_list.append(data)
             except FileNotFoundError:
                 # 处理文件不存在的情况
-                pass
+                print("文件不存在")
 
     return pet_list
+
