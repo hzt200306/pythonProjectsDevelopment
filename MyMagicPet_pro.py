@@ -43,22 +43,20 @@ class MyMagicPet:
         喂食失败则输出失败信息
         '''
         if self.physicalCondition == "健康的":
-            print("喂食成功")
+            print("喂食成功，你的宠物打了一个很响的饱嗝")
             self.physicalCondition = "饱食的"
-            if self.mentalCondition == "疲劳的":
-                self.mentalCondition = "快乐的"
-            print(f"{self.name}现在状态是{self.physicalCondition}")
             self.upgrade_pet()
         elif self.physicalCondition == "饥饿的":
-            print("喂食成功")
-            if self.mentalCondition == "疲劳的":
-                self.mentalCondition = "快乐的"
+            print("喂食成功，你的宠物蹭着你的腿表示感谢")
             self.physicalCondition = "健康的"
-            print(f"{self.name}现在状态是{self.physicalCondition}和{self.mentalCondition}")
+            self.upgrade_pet()
         else:
             print("喂食失败")
             print(f"{self.name}现在状态是{self.physicalCondition}")
             print("无法继续获取经验，需要玩耍")
+        if self.mentalCondition == "疲劳的":
+            self.mentalCondition = "快乐的"
+        print(f"{self.name}现在状态是{self.physicalCondition}和{self.mentalCondition}")
     def play_with_pet(self):
         '''
         这个函数咒语根据宠物的身心状态决定是否可以和宠物玩耍，
@@ -66,20 +64,20 @@ class MyMagicPet:
 
         '''
         if self.physicalCondition != "饥饿的" and self.mentalCondition == "快乐的":
-            print("跟他们玩耍成功")
+            print("跟他玩耍成功")
             self.mentalCondition = "兴奋的"
             print(f"{self.name}现在状态是{self.mentalCondition}")
             self.upgrade_pet()
-            print(f"现在{self.name}的等级是{self.degree}")
-        elif self.mentalCondition == "兴奋的":
+        elif self.physicalCondition != "饥饿的" and self.mentalCondition == "兴奋的":
             print("跟他玩耍成功")
             self.mentalCondition = "疲劳的"
             self.physicalCondition = "饥饿的"
-            print(f"{self.name}现在的状态是{self.physicalCondition}和{self.mentalCondition}")
+            self.upgrade_pet()
         else:
             print("跟他们玩耍失败")
             print(f"{self.name}现在状态是{self.mentalCondition}")
             print("无法继续获取经验，需要喂食")
+        print(f"{self.name}现在的状态是{self.physicalCondition}和{self.mentalCondition}")
     def roll_over(self):
         '''这是一个简单的让宠物执行翻滚动作的函数咒语'''
         if self.degree >= 2:
@@ -252,7 +250,6 @@ def create_pet():
     print(f"你成功创建了宠物{pet.name}")
     pet_data = {"name": name, "age": age, "gender": gender, "color": color, "tech": "技能1","degree": 0,"container": 0}
     db_handle.save_data(pet_data)
-    print(list(db_handle.get_all_data()))
 def operation_pet():
     if not db_handle.get_all_data():
         print("你还没有创建任何宠物,请先创造宠物后再进行")
@@ -266,7 +263,7 @@ def operation_pet():
             pet_name = input("请输入你要对其进行操作的宠物的名字：")
             pet_data = find_pet_by_name(pet_name)
             if not pet_data:
-                print("你输入的宠物不存在,请重新数入")
+                print("你输入的宠物不存在,请重新输入")
         pet = Dragon(pet_data["name"], pet_data["age"], pet_data["gender"], pet_data["color"], pet_data["tech"])
         pet.update_degree(pet_data["degree"],pet_data["container"])
         pet.Dradon_operation(pet)
@@ -296,4 +293,6 @@ while 1:
         operation_dict[choice]()
     else:
         print("你输入的选项有误，请重新输入")
+
+
 
