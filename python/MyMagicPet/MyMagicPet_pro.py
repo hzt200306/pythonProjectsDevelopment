@@ -1,6 +1,8 @@
 #"我的魔幻宠物"
 #目的：通过编程创建和自己互动的虚拟宠物，学习类的一些基本概念和用法
-from DB import db_handle
+from python_MyMagicPet.DB import db_handle
+
+
 #1.定义类
 class MyMagicPet:
     #2.定义属性
@@ -31,7 +33,7 @@ class MyMagicPet:
         self.mentalCondition = "快乐的"
         self.degree = 0
         self.container = 0
-        self.MyMagicPet_operation = {1: self.feed_pet, 2: self.play_with_pet, 3: self.show_info, 4: self.roll_over}
+        self.MyMagicPet_operation = {'1': self.feed_pet, '2': self.play_with_pet, '3': self.show_info, '4': self.roll_over}
     def show_info(self):
         print(f"{self.name}的年龄是{self.age}岁，性别是{self.gender}，颜色是{self.color}")
         print(f"状态是{self.physicalCondition}和{self.mentalCondition},等级是{self.degree}")
@@ -119,7 +121,7 @@ class Dragon(MyMagicPet):
         self.strength = "强大"
         self.speed = "飞快"
         self.tech = tech
-        self.Dragon_operation_dict = {1: self.use_tech,2:self.magic_transform, 3: self.show_func}
+        self.Dragon_operation_dict = {'1': self.use_tech,'2':self.magic_transform, '3': self.show_func}
     def magic_transform(self):
         #这是一个简单的用来换技能的函数咒语，它会根据宠物的等级来判断是否可以进行技能转换
         if self.tech == "技能1":
@@ -173,10 +175,7 @@ class Dragon(MyMagicPet):
             print("2.使用宠物特别的操作")
             print("3.退出该选择")
             choice_1 = input("请输入你的选择(请输入功能对应的数字)：")
-            if choice_1 == "":
-                print("你没有输入选项,请在“1，2，3”中选一")
-            choice_1 = int(choice_1)
-            if choice_1 == 1:
+            if choice_1 == '1':
                 while 1:
                     print("宠物通用的操作有：")
                     print("1.喂食")
@@ -185,18 +184,15 @@ class Dragon(MyMagicPet):
                     print("4.翻滚")
                     print("5.退出该选择")
                     choice_2 = input("请输入你的选择(请输入功能对应的数字)：")
-                    if choice_2 =="":
-                        print("你没有输入选项,请在“1，2，3，4，5”中选一")
-                        break
-                    if int(choice_2) in self.MyMagicPet_operation:
-                        pet.MyMagicPet_operation[int(choice_2)]()
-                    elif int(choice_2) == 5:
+                    if choice_2 in self.MyMagicPet_operation:
+                        pet.MyMagicPet_operation[choice_2]()
+                    elif choice_2 == '5':
                         print("退出")
                         break
                     else:
                         print("你输入了错误的选项,请在“1，2，3，4，5”中选一")
 
-            elif choice_1 == 2:
+            elif choice_1 == '2':
                 print("")
                 while 1:
                     print("宠物的特别操作有：")
@@ -204,15 +200,15 @@ class Dragon(MyMagicPet):
                     print("2.转换技能")
                     print("3.展示宠物的独特属性")
                     print("4.退出该选择")
-                    choice_2 = int(input("请输入你的选择(请输入功能对应的数字)："))
+                    choice_2 = input("请输入你的选择(请输入功能对应的数字)：")
                     if choice_2 in self.Dragon_operation_dict:
                         self.Dragon_operation_dict[choice_2]()
-                    elif choice_2 == 4:
+                    elif choice_2 == '4':
                         print("退出")
                         break
                     else:
                         print("你输入了错误的选项,请在“1，2，3，4”中选一")
-            elif choice_1 == 3:
+            elif choice_1 == '3':
                 print("退出")
                 break
             else:
@@ -277,7 +273,7 @@ def story_pet():
 def exit_pet():
     print("欢迎下次再来")
     exit()
-operation_dict = {1:create_pet,2:operation_pet,3:story_pet,4:exit_pet}
+operation_dict = {'1':create_pet,'2':operation_pet,'3':story_pet,'4':exit_pet}
 while 1:
     print("欢迎来到魔法宠物店")
     print("现在你是魔法宠物店的一名小魔法师，请输入你要进行的操作")
@@ -286,13 +282,12 @@ while 1:
     print("3.跟宠物进行互动故事")
     print("4.退出程序")
     choice = input("请输入你的选择：")
-    if choice == "":
-        print("你没有输入选项,请在“1，2，3，4”中选一")
-    choice = int(choice)
     if choice in operation_dict:
         operation_dict[choice]()
     else:
         print("你输入的选项有误，请重新输入")
+
+
 
 
 
