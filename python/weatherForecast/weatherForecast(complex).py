@@ -20,19 +20,17 @@ def magic_weather_hat(city):
     response = requests.get(request_url)
     weather_data = response.json()  # 解析返回的JSON数据
 
+    # 通过lambda创建建议函数实现摄氏度转华氏度
+    celsius_to_fahrenheit = lambda celsius: celsius * 9 / 5 + 32
+
     # 从天气数据中提取信息
     weather_condition = weather_data['wea']  # 天气情况
     temperature_current = weather_data['tem']  # 实况温度
-    temperature_day = weather_data['tem_day']  # 白天温度
-    temperature_night = weather_data['tem_night']  # 夜间温度
-    wind_direction = weather_data['win']  # 风向
-    wind_speed = weather_data['win_speed']  # 风力
+    temperature_fahrenheit = celsius_to_fahrenheit(temperature_current)
 
     # 输出天气信息
     print(
-        f"在{city}的天气是{weather_condition}，当前温度为{temperature_current}度，"
-        f"白天温度为{temperature_day}度，夜间温度为{temperature_night}度。"
-        f"风向是{wind_direction}，风力为{wind_speed}。")
+        f"在{city}的天气是{weather_condition}，当前温度为{temperature_current}摄氏度，{temperature_fahrenheit}华氏度")
 
 
 # 这是主程序的入口
