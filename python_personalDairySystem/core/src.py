@@ -69,14 +69,14 @@ class Note(LogIn):
         #试着在观察"%Y-%m-%d %H:%M"后，写一下
         self.title = ""
         self.content = "  "
-        self.Note_operation = {"1": self.write, "2": self.read, "3": self.update}
+        self.Note_operation = {"1": self.write, "2": self.read, "3": self.update,"4":self.backup,"5":self.restore}
         #这个Note_operation字典，用来存储所有的操作，键为数字，值为对应的操作函数
         #这样可以少写一些elif语句，直接通过键值来调用对应的操作函数
     def write(self):
         '''
         这是一个用来写日记的函数
         '''
-        user_data = db_handle.get_data(self.name)
+        user_data = db_handle.get_data(self.name,db_handle.main_file)
         #这里通过调用get_data方法，获取用户数据（是一个字典）
         self.title = input("请输入日记标题：")
         if self.title in user_data["content"]:
@@ -98,13 +98,13 @@ class Note(LogIn):
         #[:-1]用切片来去除列表中的最后一个元素的*
         content = ["日记题目："+self.title , content_list,"编写日期："+ self.date]
         user_data["content"][self.title] = content
-        db_handle.save_data(user_data)
+        db_handle.save_data(user_data,db_handle.main_file)
 
     def read(self):
         '''
         这是一个用来根据指定日记标题来查询日记功能的函数
         '''
-        user_data = db_handle.get_data(self.name)
+        user_data = db_handle.get_data(self.name,db_handle.main_file)
         #这里通过调用get_data方法，获取用户数据（是一个字典）
         print("已有的日记标题有")
         for i in user_data["content"]:
@@ -124,6 +124,18 @@ class Note(LogIn):
                         print(j)
                 else:
                     print(user_data["content"][title][i])
+
+    def backup(self):
+        #这是一个用来备份日记的函数，原理跟write差不多
+        user_data = db_handle.get_data(self.name,db_handle.main_file)
+        db_handle.save_data(user_data,db_handle.backup_file)
+        print("备份成功")
+
+    def restore(self):
+        #这是一个用来还原日记的函数，原理跟backup差不多
+        user_data = db_handle.get_data(self.name,db_handle.backup_file)
+        db_handle.save_data(user_data,db_handle.main_file)
+        print("还原成功")
 
 
     def update(self):
@@ -155,12 +167,16 @@ def run():
                 print("1.写日志")
                 print("2.读日志")
                 print("3.修改日记")
-                print("4.退出")
+                print("4.备份")
+                print("5.恢复")
+                print("6.退出")
+
+
                 choice = input()
                 if choice in note.Note_operation:
                     note.Note_operation[choice]()
                     #这里通过键值来调用对应的操作函数
-                elif choice == "4":
+                elif choice == "6":
                     print("退出成功")
                     break
                 else:
