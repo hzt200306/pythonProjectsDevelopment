@@ -5,10 +5,11 @@ import os
 current_directory = os.path.dirname(os.path.abspath(__file__))
 #这个函数使用os模块获取当前脚本所在目录的绝对路径，并将其与'user_info'拼接成新的路径。
 # 这个函数的目的是获取存放用户信息文件的完整路径
-file_directory = os.path.join(current_directory, 'user_info')
+main_file = os.path.join(current_directory, 'user_info')
+backup_file = os.path.join(current_directory, 'user_info_backup')
 
 
-def save_data(user_info):
+def save_data(user_info,file_directory):
     #实现文件的保存
     name =user_info['user_name']
     #文件不存在则新建，存在清空原有内容
@@ -28,7 +29,7 @@ def save_data(user_info):
         #json文件的保存格式是json格式，json格式是一种数据交换格式，可以用来存储各种数据
         #文件创建后，我们可以在DB文件夹中的user_info文件夹中看到对应的文件
 
-def get_data(user_name):
+def get_data(user_name,file_directory):
     user =fr'{file_directory}\{user_name}.json'
     #user表示按用户名查找我们需要的文件地址
     if os.path.exists(user):#判断文件是否存在，存在则返回True
