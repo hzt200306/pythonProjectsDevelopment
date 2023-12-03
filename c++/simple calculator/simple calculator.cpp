@@ -38,7 +38,7 @@ int main()
     // 减法计算
     cout << num1 << " - " << num2 << " = " << num1 - num2 << endl;
 
-    // 除法计算
+    // 乘法计算
     cout << num1 << " * " << num2 << " = " << num1 * num2 << endl;
 
     //必要知识二：
@@ -47,7 +47,8 @@ int main()
     // 注意一下这个特殊情况，我们要防止除法中的除零错误哦喵~
     if (num2 != 0)
     {
-        cout << num1 << " / " << num2 << " = " << num1 / num2 << endl; // 除法计算部分
+        // 除法计算
+        cout << num1 << " / " << num2 << " = " << num1 / num2 << endl; 
     }
     else
     {
