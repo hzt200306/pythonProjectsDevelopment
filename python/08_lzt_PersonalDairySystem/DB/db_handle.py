@@ -21,7 +21,7 @@ def save_data(user_info,file_directory):
 
     #{file_directory}\{name}.json'是在指定文件地址存储以name为文件名的json文件
     #'w'是写入模式，'w'是写模式，如果文件不存在，则会新建一个文件，如果文件存在，则会清空原有内容
-        json.dump(user_info,f)
+        json.dump(user_info,f, ensure_ascii=False)  # ensure_ascii=False 保证写入中文原码，不会被转义，提升json文件可读性
         #json.dump()函数是将python对象转化为json格式，然后写入文件中
         #json.dump()函数的第一个参数是要转化的对象，第二个参数是要写入的文件，第三个参数是写入文件的编码格式
         #这里我们将user_info对象转化为json格式，然后写入文件中，并使用utf-8编码格式
