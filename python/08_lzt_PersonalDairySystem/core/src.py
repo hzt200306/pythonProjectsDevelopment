@@ -37,21 +37,24 @@ class LogIn():
                 print('密码不一致,重新注册')
 
     def login(self):
-        user_name = input('请输入用户名')
-        password = input('请输入密码')
-        # 写到这，先去取数据再来写判断
-        flag, msg = user_i.login_info(user_name, password)
-        #flag为True则表示登录成功，为False则表示登录失败
-        #可以移步到user_i.py中查看具体的返回值
-        #
-        if flag:
-            print(msg)
-            login_user = user_name
-        else:
-            print(msg)
-            login_user = None
-        #这个return值用来判断是否成功登录
-        return login_user
+        '''要是一直输入错误，则会进入死循环，想想这里可以怎么改善
+        '''
+        while 1:
+            user_name = input('请输入你的用户名>>>')
+            password = input('请输入你的密码>>>')
+            #下面的if语句用来判断用户输入数据是否一致
+            flag, msg = user_i.login_info(user_name, password)
+            # flag为True则表示登录成功，为False则表示登录失败
+            if flag:
+                print(msg)
+                break
+                # 可以移步到user_i.py中查看具体的返回值
+            else:
+                print(msg)
+
+
+        return user_name
+
 class Note(LogIn):
     '''
     Note类是一个日记应用的类，继承自LogIn类。
@@ -81,22 +84,16 @@ class Note(LogIn):
         self.title = input("请输入日记标题：")
         if self.title in user_data["content"]:
             # 用来判断用户输入的标题是否已经存在
-            # 不存在就通过再调用一下这个函数，来实现循环的效果
+            # 存在就通过再调用一下这个函数，来实现循环的效果
             print("该标题已经存在，请重新输入")
             self.write()
             return 0
-        content_list = []
-        #这是一个用来存储用户输入的日记内容的列表
         while self.content[-1]!="*":
             #这是一个循环，用来判断用户输入的内容是否已经结束
             #如果没有结束，就继续输入
-            self.content = input("请输入日记内容，并在末尾加上*来结束写作,")
-            if len(self.content)<=2:
-                self.content = "  "+self.content
-            content_list.append(self.content.strip())
-        content_list[-1] = content_list[-1][:-1]
-        #[:-1]用切片来去除列表中的最后一个元素的*
-        content = ["日记题目："+self.title , content_list,"编写日期："+ self.date]
+            #这里输入的是一个简陋的字符串，想想可以怎么改进
+            self.content += input("请输入日记内容，并在末尾加上*来结束写作,")
+        content = ["日记题目："+self.title , self.content,"编写日期："+ self.date]
         user_data["content"][self.title] = content
         db_handle.save_data(user_data,db_handle.main_file)
 
@@ -117,12 +114,6 @@ class Note(LogIn):
         else:
             for i in range(3):
                 #content对应的列表有三个元素，分别是题目，内容，日期，所以循环3次
-                if i == 1:
-                #1是内容的的下标，当i等于1时，就打印内容
-                #而内容是分行保存在一个列表中的，所以需要遍历这个列表
-                    for j in user_data["content"][title][i]:
-                        print(j)
-                else:
                     print(user_data["content"][title][i])
 
     def backup(self):
@@ -159,10 +150,6 @@ def run():
         #这里的login_user是LogIn类的实例化对象，用来处理登录和注册的功能
         if choice == "1":
             note = Note(login_user.login())
-            #这里的note是Note类的实例化对象，用来处理写日记、读日记、修改日记的功能
-            if note.name == None:
-                #如果note.name为空，则表示用户没有登录，就继续循环
-                continue
             while 1:
                 print("1.写日志")
                 print("2.读日志")
@@ -170,8 +157,6 @@ def run():
                 print("4.备份")
                 print("5.恢复")
                 print("6.退出")
-
-
                 choice = input()
                 if choice in note.Note_operation:
                     note.Note_operation[choice]()
@@ -190,5 +175,6 @@ def run():
         else:
             print("输入有误，请重新输入")
 #注意:这里的主函数是不能直接运行的，需要移步到run文件中运行
+
 
 
