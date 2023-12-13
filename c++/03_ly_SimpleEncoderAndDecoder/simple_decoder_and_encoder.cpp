@@ -1,105 +1,105 @@
 #include <iostream>
 #include <string>
 
-// åŠ æ³•åŠ å¯†å‡½æ•°
+// ¼Ó·¨¼ÓÃÜº¯Êı
 std::string addEncrypt(const std::string& input, int key) {
     std::string encryptedText = input;
 
     for (char& c : encryptedText) {
-        c = c + key; // ä½¿ç”¨åŠ æ³•è¿ç®—åŠ å¯†
+        c = c + key; // Ê¹ÓÃ¼Ó·¨ÔËËã¼ÓÃÜ
     }
 
     return encryptedText;
 }
 
-// åŠ æ³•è§£å¯†å‡½æ•°
+// ¼Ó·¨½âÃÜº¯Êı
 std::string addDecrypt(const std::string& input, int key) {
-    return addEncrypt(input, -key); // ä½¿ç”¨å‡æ³•è¿ç®—è§£å¯†
+    return addEncrypt(input, -key); // Ê¹ÓÃ¼õ·¨ÔËËã½âÃÜ
 }
 
-// ä»¿ç…§ä»¥ä¸Šå½¢å¼ï¼Œæˆ‘ä»¬å°±èƒ½å¾ˆè½»æ˜“çš„å†™å‡ºåŸºäºå…¶ä»–å‡ ç§åŸºæœ¬è¿ç®—ç¬¦çš„åŠ å¯†å™¨å’Œè§£å¯†å™¨äº†
+// ·ÂÕÕÒÔÉÏĞÎÊ½£¬ÎÒÃÇ¾ÍÄÜºÜÇáÒ×µÄĞ´³ö»ùÓÚÆäËû¼¸ÖÖ»ù±¾ÔËËã·ûµÄ¼ÓÃÜÆ÷ºÍ½âÃÜÆ÷ÁË
 
-// å‡æ³•åŠ å¯†å‡½æ•°
+// ¼õ·¨¼ÓÃÜº¯Êı
 std::string subtractEncrypt(const std::string& input, int key) {
     std::string encryptedText = input;
 
     for (char& c : encryptedText) {
-        c = c - key; // ä½¿ç”¨å‡æ³•è¿ç®—åŠ å¯†
+        c = c - key; // Ê¹ÓÃ¼õ·¨ÔËËã¼ÓÃÜ
     }
 
     return encryptedText;
 }
 
-// å‡æ³•è§£å¯†å‡½æ•°
+// ¼õ·¨½âÃÜº¯Êı
 std::string subtractDecrypt(const std::string& input, int key) {
-    return subtractEncrypt(input, -key); // ä½¿ç”¨åŠ æ³•è¿ç®—è§£å¯†
+    return subtractEncrypt(input, -key); // Ê¹ÓÃ¼Ó·¨ÔËËã½âÃÜ
 }
 
-// ä¹˜æ³•åŠ å¯†å‡½æ•°
+// ³Ë·¨¼ÓÃÜº¯Êı
 std::string multiplyEncrypt(const std::string& input, int key) {
     std::string encryptedText = input;
 
     for (char& c : encryptedText) {
-        c = c * key; // ä½¿ç”¨ä¹˜æ³•è¿ç®—åŠ å¯†
+        c = c * key; // Ê¹ÓÃ³Ë·¨ÔËËã¼ÓÃÜ
     }
 
     return encryptedText;
 }
 
-// ä¹˜æ³•è§£å¯†å‡½æ•°
+// ³Ë·¨½âÃÜº¯Êı
 std::string multiplyDecrypt(const std::string& input, int key) {
     if (key != 0) {
-        return multiplyEncrypt(input, 1 / key); // ä½¿ç”¨é™¤æ³•è¿ç®—è§£å¯†
+        return multiplyEncrypt(input, 1 / key); // Ê¹ÓÃ³ı·¨ÔËËã½âÃÜ
     } else {
-        std::cerr << "é”™è¯¯ï¼šé™¤æ•°ä¸èƒ½ä¸ºé›¶" << std::endl;
+        std::cerr << "´íÎó£º³ıÊı²»ÄÜÎªÁã" << std::endl;
         return input;
     }
 }
 
-// é™¤æ³•åŠ å¯†å‡½æ•°
+// ³ı·¨¼ÓÃÜº¯Êı
 std::string divideEncrypt(const std::string& input, int key) {
     if (key != 0) {
         std::string encryptedText = input;
 
         for (char& c : encryptedText) {
-            c = c / key; // ä½¿ç”¨é™¤æ³•è¿ç®—åŠ å¯†
+            c = c / key; // Ê¹ÓÃ³ı·¨ÔËËã¼ÓÃÜ
         }
 
         return encryptedText;
     } else {
-        std::cerr << "é”™è¯¯ï¼šé™¤æ•°ä¸èƒ½ä¸ºé›¶" << std::endl;
+        std::cerr << "´íÎó£º³ıÊı²»ÄÜÎªÁã" << std::endl;
         return input;
     }
 }
 
-// é™¤æ³•è§£å¯†å‡½æ•°
+// ³ı·¨½âÃÜº¯Êı
 std::string divideDecrypt(const std::string& input, int key) {
     if (key != 0) {
-        return divideEncrypt(input, 1 / key); // ä½¿ç”¨ä¹˜æ³•è¿ç®—è§£å¯†
+        return divideEncrypt(input, 1 / key); // Ê¹ÓÃ³Ë·¨ÔËËã½âÃÜ
     } else {
-        std::cerr << "é”™è¯¯ï¼šé™¤æ•°ä¸èƒ½ä¸ºé›¶" << std::endl;
+        std::cerr << "´íÎó£º³ıÊı²»ÄÜÎªÁã" << std::endl;
         return input;
     }
 }
 
 int main() {
     std::string originalText;
-    std::cout << "è¯·è¾“å…¥è¦åŠ å¯†çš„æ–‡æœ¬: ";
+    std::cout << "ÇëÊäÈëÒª¼ÓÃÜµÄÎÄ±¾: ";
     std::getline(std::cin, originalText);
 
     int encryptionKey;
-    std::cout << "è¯·è¾“å…¥å¯†é’¥(ä¸€ä¸ªæ•´æ•°): ";
+    std::cout << "ÇëÊäÈëÃÜÔ¿(Ò»¸öÕûÊı): ";
     std::cin >> encryptionKey;
 
     std::string encryptedText;
     std::string decryptedText;
 
     int choice;
-    std::cout << "è¯·é€‰æ‹©åŠ å¯†æ–¹å¼ï¼š\n"
-              << "1. åŠ æ³•\n"
-              << "2. å‡æ³•\n"
-              << "3. ä¹˜æ³•\n"
-              << "4. é™¤æ³•\n";
+    std::cout << "ÇëÑ¡Ôñ¼ÓÃÜ·½Ê½£º\n"
+              << "1. ¼Ó·¨\n"
+              << "2. ¼õ·¨\n"
+              << "3. ³Ë·¨\n"
+              << "4. ³ı·¨\n";
     std::cin >> choice;
 
     switch (choice) {
@@ -120,12 +120,12 @@ int main() {
             decryptedText = divideDecrypt(encryptedText, encryptionKey);
             break;
         default:
-            std::cerr << "é”™è¯¯çš„é€‰æ‹©" << std::endl;
+            std::cerr << "´íÎóµÄÑ¡Ôñ" << std::endl;
             return 1;
     }
 
-    std::cout << "åŠ å¯†åçš„æ–‡æœ¬: " << encryptedText << std::endl;
-    std::cout << "è§£å¯†åçš„æ–‡æœ¬: " << decryptedText << std::endl;
+    std::cout << "¼ÓÃÜºóµÄÎÄ±¾: " << encryptedText << std::endl;
+    std::cout << "½âÃÜºóµÄÎÄ±¾: " << decryptedText << std::endl;
 
     return 0;
 }
