@@ -4,6 +4,16 @@
 #include <iostream>
 using namespace std;
 
+// 创建一个简单函数演示static
+int magicalCounter() 
+{
+    static int count = 0;  // 使用 static 修饰符的魔法计数器
+
+    count++;  // 每次调用，魔法计数器加一
+
+    return count;  // 返回魔法计数器的值
+}
+
 // 主角登场，这里是我们的主函数
 int main()
 {
@@ -71,17 +81,14 @@ int main()
     // 尝试修改常量的值，发现魔法力量阻止了我们
     // MAGIC_NUMBER = 3.14; // 错误了喵，魔法常量不可修改呢
 
-    // 更多修饰符的介绍
-    cout << "在计算魔法的世界里，我们还有一些特殊的修饰符，比如：" << endl;
-
-    // const修饰符
-    const int MAGIC_NUMBER = 42;
-    cout << "使用const修饰符创建的魔法数字：" << MAGIC_NUMBER << endl;
+    cout << endl;
 
     // static修饰符
-    static int staticNumber = 0;
-    cout << "使用static修饰符创建的数字，可以在函数调用之间保持其值：" << staticNumber << endl;
-    staticNumber++;
+    cout << "第一次调用魔法计数器：" << magicalCounter() << endl;  // 输出 1
+    cout << "第二次调用魔法计数器：" << magicalCounter() << endl;  // 输出 2
+    cout << "第三次调用魔法计数器：" << magicalCounter() << endl;  // 输出 3
+    // 可以看到，我们在调用这个魔法计数器函数的时候被static修饰的变量count并没有如函数里那样被反复赋值为0，而这就是static的作用
+
 
     // 返回0是一个好的习惯哦喵~
     return 0;
