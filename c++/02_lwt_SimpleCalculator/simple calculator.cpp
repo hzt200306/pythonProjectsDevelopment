@@ -89,6 +89,19 @@ int main()
     cout << "第三次调用魔法计数器：" << magicalCounter() << endl;  // 输出 3
     // 可以看到，我们在调用这个魔法计数器函数的时候被static修饰的变量count并没有如函数里那样被反复赋值为0，而这就是static的作用
 
+    // unsigned修饰符+无符号整形数据类型
+    unsigned char UnsignedChar = 'a';       // 无符号字符
+    unsigned short UnsignedShort = 20;     // 无符号短整数
+    unsigned int UnsignedInt = 15862;         // 无符号整数
+    unsigned long UnsignedLong = 1253698741256;       // 无符号长整数
+    unsigned long long UnsignedLLong = 12345678987654321; // 无符号长长整数
+
+    // 输出无符号整形
+    cout << UnsignedChar << endl;
+    cout << UnsignedShort << endl;
+    cout << UnsignedInt << endl;
+    cout << UnsignedLong << endl;
+    cout << UnsignedLLong << endl;
 
     // 返回0是一个好的习惯哦喵~
     return 0;
