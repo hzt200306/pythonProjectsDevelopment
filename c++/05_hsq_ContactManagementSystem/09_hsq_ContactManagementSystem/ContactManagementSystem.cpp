@@ -15,21 +15,6 @@ public:
 
     // 默认构造函数
     Contact() = default;
-
-    // 运算符重载，用于按姓名比较联系人
-    bool operator==(const std::string& otherName) const {
-        return name == otherName;
-    }
-
-    // 运算符重载，用于按分类比较联系人
-    bool operator==(std::string& otherCategory) const {
-        return category == otherCategory;
-    }
-
-    // 运算符重载，用于按电话号码比较联系人
-    bool operator==(int otherPhoneNumber) const {
-        return std::stoi(phoneNumber) == otherPhoneNumber;
-    }
 };
 
 class ContactManager {
@@ -59,7 +44,7 @@ public:
     void deleteContact(const std::string& name) {
         // 使用 remove_if 和 erase 删除符合条件的联系人
         auto it = std::remove_if(contacts.begin(), contacts.end(), [&name](const Contact& c) {
-            return c == name;
+            return c.name == name;
         });
 
         contacts.erase(it, contacts.end());
@@ -67,51 +52,52 @@ public:
     }
 
     // 按姓名搜索联系人
-    Contact searchContactByName(const std::string& name) {
+    Contact searchContact(const std::string& name) {
         // 使用 find 查找联系人
-        auto it = std::find(contacts.begin(), contacts.end(), name);
+        auto it = std::find_if(contacts.begin(), contacts.end(), [&name](const Contact& c) {
+            return c.name == name;
+        });
         return (it != contacts.end()) ? *it : Contact(); // 未找到时返回空 Contact 对象
     }
 
     // 按电话号码搜索联系人
-    Contact searchContactByPhoneNumber(const int phoneNumber) {
-        auto it = std::find(contacts.begin(), contacts.end(), phoneNumber);
+    Contact searchContact(const int phoneNumber) {
+        auto it = std::find_if(contacts.begin(), contacts.end(), [&phoneNumber](const Contact& c) {
+            return std::stoi(c.phoneNumber) == phoneNumber;
+        });
         return (it != contacts.end()) ? *it : Contact(); // 未找到时返回空 Contact 对象
     }
 
     // 按分类搜索联系人
-    std::vector<Contact> searchContactByCategory(const std::string& category, bool byCategory = true) {
+    std::vector<Contact> searchContactByCategory(const std::string& category) {
         std::vector<Contact> result;
 
-        if (byCategory) {
-            // 使用 std::copy_if 将符合条件的联系人复制到结果向量中
-            std::copy_if(contacts.begin(), contacts.end(), std::back_inserter(result), [&category](const Contact& c) {
-                return c.category == category; // 按分类搜索
-            });
+        // 使用 std::copy_if 将符合条件的联系人复制到结果向量中
+        std::copy_if(contacts.begin(), contacts.end(), std::back_inserter(result), [&category](const Contact& c) {
+            return c.category == category;
+        });
 
-            // 显示符合条件的联系人
-            if (!result.empty()) {
-                std::cout << "找到以下联系人：" << std::endl;
-                for (const auto& contact : result) {
-                    std::cout << "姓名: " << contact.name << ", 电话: " << contact.phoneNumber << ", 分类: " << contact.category << std::endl;
-                }
-            } else {
-                std::cout << "未找到该分类下的联系人。" << std::endl;
+        // 显示符合条件的联系人
+        if (!result.empty()) {
+            std::cout << "找到以下联系人：" << std::endl;
+            for (const auto& contact : result) {
+                std::cout << "姓名: " << contact.name << ", 电话: " << contact.phoneNumber << ", 分类: " << contact.category << std::endl;
             }
         } else {
-            // Code for searching by other criteria if needed
+            std::cout << "未找到该分类下的联系人。" << std::endl;
         }
 
         return result;
     }
 
     // 编辑联系人信息
-    void editContact(const std::string& name, const std::string& newPhoneNumber, const std::string& newCategory) {
-        auto it = std::find(contacts.begin(), contacts.end(), name);
+    void editContact(const std::string& name, const std::string& newPhoneNumber) {
+        auto it = std::find_if(contacts.begin(), contacts.end(), [&name](const Contact& c) {
+            return c.name == name;
+        });
 
         if (it != contacts.end()) {
             it->phoneNumber = newPhoneNumber;
-            it->category = newCategory;
             std::cout << "联系人信息已编辑。" << std::endl;
         } else {
             std::cout << "未找到联系人。" << std::endl;
@@ -153,7 +139,7 @@ int main() {
                 std::string name;
                 std::cout << "请输入要搜索的联系人姓名: ";
                 std::cin >> name;
-                Contact foundContact = contactManager.searchContactByName(name);
+                Contact foundContact = contactManager.searchContact(name);
                 if (!foundContact.name.empty()) {
                     std::cout << "找到联系人: " << foundContact.name << ", 电话: " << foundContact.phoneNumber << std::endl;
                 } else {
@@ -165,7 +151,7 @@ int main() {
                 int phoneNumber;
                 std::cout << "请输入要搜索的联系人电话号码: ";
                 std::cin >> phoneNumber;
-                Contact foundContact = contactManager.searchContactByPhoneNumber(phoneNumber);
+                Contact foundContact = contactManager.searchContact(phoneNumber);
                 if (!foundContact.name.empty()) {
                     std::cout << "找到联系人: " << foundContact.name << ", 电话: " << foundContact.phoneNumber << std::endl;
                 } else {
@@ -177,27 +163,16 @@ int main() {
                 std::string category;
                 std::cout << "请输入要搜索的联系人分类: ";
                 std::cin >> category;
-                std::vector<Contact> result = contactManager.searchContactByCategory(static_cast<const std::string&>(category));
-
-                if (!result.empty()) {
-                    std::cout << "找到以下联系人：" << std::endl;
-                    for (const auto& contact : result) {
-                        std::cout << "姓名: " << contact.name << ", 电话: " << contact.phoneNumber << ", 分类: " << contact.category << std::endl;
-                    }
-                } else {
-                    std::cout << "未找到该分类下的联系人。" << std::endl;
-                }
+                contactManager.searchContactByCategory(category);
                 break;
             }
             case 6: {
-                std::string name, newPhone, newCategory;
+                std::string name, newPhone;
                 std::cout << "请输入要编辑的联系人姓名: ";
                 std::cin >> name;
                 std::cout << "请输入新的电话号码: ";
                 std::cin >> newPhone;
-                std::cout << "请输入新的分类: ";
-                std::cin >> newCategory;
-                contactManager.editContact(name, newPhone, newCategory);
+                contactManager.editContact(name, newPhone);
                 break;
             }
             case 7: {
@@ -211,4 +186,5 @@ int main() {
 
     return 0;
 }
+
 
